@@ -1,17 +1,23 @@
 import express , { Request, Response } from 'express';
-import { graphqlHTTP } from 'express-graphql';
+import Article from './models/articles.model';
 
-import { buildSchema } from 'graphql';
+import connect from './config/connect-db';
 import dotenv from 'dotenv';
 dotenv.config();
 const PORT = process.env.PORT || 8080;
 
 const app = express();
 
-app.get('/articles', (req: Request, res: Response) => {
-  res.json({
-    message: 'Hello, this is the articles endpoint!'
-  });
+connect();
+
+
+app.get('/articles', async (req: Request, res: Response) => {
+    try {
+        const articles = await Article.find({ deleted: false });
+        res.json(articles);
+    } catch (error) {
+        res.status(500).json({ message: 'Error fetching articles', error });
+    }
 });
 
 
