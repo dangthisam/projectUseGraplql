@@ -53,7 +53,17 @@ import { create } from "domain";
                 }
             }
         },
-
+      Article:{
+            category: async (article) => {
+                try {
+                    // Lấy danh mục của bài viết
+                    return await Category.findById(article.category);
+                } catch (error) {
+                    console.error('Error fetching article category:', error);
+                    throw new Error('Failed to fetch article category');
+                }
+            }
+        },
         Mutation: {
             createArticle: async (__, args) => {
                 try {

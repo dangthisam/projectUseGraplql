@@ -9,7 +9,8 @@ import {gql} from "graphql-tag";
         avatar: String,
         description: String,
         createdAt: String,
-        updatedAt: String
+        updatedAt: String,
+        category: Category
       },
       type Category {
         id: ID,
@@ -30,7 +31,8 @@ import {gql} from "graphql-tag";
       input ArticleInput {
         title: String,
         avatar: String,
-        description: String
+        description: String,
+        categoryId: String
 
         }
 
