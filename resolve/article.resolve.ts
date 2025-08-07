@@ -1,13 +1,20 @@
    
 
+import { constants } from "buffer";
 import Article from "../models/articles.model";
 import Category from "../models/category.model";
    const resolversArticle = {
         Query: {
-            articles: async () => {
+            articles: async (__, args) => {
                 try {
+                   //sort
+                    const { sortKey, sortValue } = args;
+                 const   sort ={}
+                    if (sortKey && sortValue) {
+                        sort[sortKey] = sortValue 
+                    }
                     // Lấy danh sách bài viết từ cơ sở dữ liệu
-                    return await Article.find({ deleted: false }).sort({ createdAt: -1 });
+                    return await Article.find({ deleted: false }).sort(sort);
                 } catch (error) {
                     console.error('Error fetching articles:', error);
                     throw new Error('Failed to fetch articles');

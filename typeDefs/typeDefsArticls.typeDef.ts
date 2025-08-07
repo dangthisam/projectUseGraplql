@@ -15,7 +15,7 @@ import {gql} from "graphql-tag";
   
 
       type Query {
-        articles: [Article],
+        articles(sortKey: String ,sortValue: String): [Article],
         getArticle(id: ID): Article,
     
       }

@@ -1,5 +1,4 @@
 import express from 'express';
-import Article from './models/articles.model.js';
 import connect from './config/connect-db.js';
 import dotenv from 'dotenv';
 import { ApolloServer } from '@apollo/server';
