@@ -27,7 +27,9 @@ import {gql} from "graphql-tag";
         }
 
         type Mutation {
-        createArticle(article: ArticleInput): Article,}
+        createArticle(article: ArticleInput): Article,
+        deleteArticle(id: ID): String}
+       
     `;
 
 

@@ -40,6 +40,18 @@
                     console.error('Error creating article:', error);
                     throw new Error('Failed to create article');
                 }
+            },
+
+            deleteArticle: async (__, args) => {
+                const { id } = args;
+                try {
+                    const article = await Article.findByIdAndUpdate(id, { deleted: true }, { new: true });
+                    if (!article) throw new Error('Article not found');
+                    return 'Article deleted successfully';
+                } catch (error) {
+                    console.error('Error deleting article:', error);
+                    throw new Error('Failed to delete article');
+                }
             }
         }
     };
