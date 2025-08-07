@@ -1,5 +1,6 @@
    
    import Article from "./models/articles.model";
+   import Category from "./models/category.model";  
    const resolvers = {
         Query: {
             articles: async () => {
@@ -24,6 +25,16 @@
                 } catch (error) {
                     console.error('Error fetching article:', error);
                     throw new Error('Failed to fetch article');
+                }
+            },
+
+            categories: async () => {
+                try {
+                    // Lấy danh sách danh mục từ cơ sở dữ liệu
+                    return await Category.find({ deleted: false }).sort({ createdAt: -1 });
+                } catch (error) {
+                    console.error('Error fetching categories:', error);
+                    throw new Error('Failed to fetch categories');
                 }
             }
         },
