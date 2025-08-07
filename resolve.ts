@@ -113,6 +113,29 @@ import { create } from "domain";
                     console.error('Error creating category:', error);
                     throw new Error('Failed to create category');
                 }
+            },
+
+
+            updateCategory: async (__, args) => {
+                const { id, category } = args;
+                try {
+                    const updatedCategory = await Category.updateOne({
+                        _id: id,
+                        deleted: false
+                    }, {
+                        $set: {
+                            title: category.title,
+                            avatar: category.avatar,
+                            updatedAt: new Date().toISOString()
+                        }
+                    });
+
+                    if (!updatedCategory) throw new Error('Category not found or update failed');
+                    return await Category.findById(id); // Trả về danh mục đã cập nhật
+                } catch (error) {
+                    console.error('Error updating category:', error);
+                    throw new Error('Failed to update category');
+                }
             }
         }
     };
