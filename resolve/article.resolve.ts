@@ -6,7 +6,7 @@ const resolversArticle = {
     articles: async (__, args) => {
       try {
         //sort
-        const { sortKey, sortValue , currentPage, limit } = args;
+        const { sortKey, sortValue , currentPage, limit, filterKey, filterValue } = args;
         const sort = {};
         if (sortKey && sortValue) {
           sort[sortKey] = sortValue;
@@ -14,9 +14,15 @@ const resolversArticle = {
 
         // Pagination
         const skip = currentPage && limit ? (currentPage - 1) * limit : 0;
+const find={
+    deleted: false
+}
+if(filterKey && filterValue) {
+    find[filterKey] = filterValue;
+}
 
         // Lấy danh sách bài viết từ cơ sở dữ liệu
-        return await Article.find({ deleted: false }).sort(sort).limit(limit).skip(skip);
+        return await Article.find(find).sort(sort).limit(limit).skip(skip);
       } catch (error) {
         console.error("Error fetching articles:", error);
         throw new Error("Failed to fetch articles");
