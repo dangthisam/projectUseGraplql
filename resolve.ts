@@ -52,6 +52,28 @@
                     console.error('Error deleting article:', error);
                     throw new Error('Failed to delete article');
                 }
+            },
+            updateArticle: async (__, args) => {
+                const { id, article } = args;
+                try {
+                   const updatedArticle = await Article.updateOne({
+                        _id: id,
+                        deleted: false
+                    }, {
+                        $set: {
+                            title: article.title,
+                            avatar: article.avatar,
+                            description: article.description,
+                            updatedAt: new Date().toISOString()
+                        }
+                    });
+
+                    if (!updatedArticle) throw new Error('Article not found or update failed');
+                    return await Article.findById(id); // Trả về bài viết đã cập nhật
+                } catch (error) {
+                    console.error('Error updating article:', error);
+                    throw new Error('Failed to update article');
+                }
             }
         }
     };
