@@ -136,6 +136,18 @@ import { create } from "domain";
                     console.error('Error updating category:', error);
                     throw new Error('Failed to update category');
                 }
+            },
+
+            deleteCategory: async (__, args) => {
+                const { id } = args;
+                try {
+                    const category = await Category.findByIdAndUpdate(id, { deleted: true }, { new: true });
+                    if (!category) throw new Error('Category not found');
+                    return 'Category deleted successfully';
+                } catch (error) {
+                    console.error('Error deleting category:', error);
+                    throw new Error('Failed to delete category');
+                }
             }
         }
     };
