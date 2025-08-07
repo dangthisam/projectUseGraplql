@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 const articleSchema = new mongoose.Schema({
-  title: { type: String, required: true },
-  avatar: { type: String, required: true },
-  description: { type: String, required: true },
-  categoryId: { type: String, required: true },
- 
+  title: { type: String },
+  avatar: { type: String },
+  description: { type: String },
+  categoryId: { type: String },
+
   createdAt: { type: Date, default: Date.now },
   deleted: { type: Boolean, default: false },
   deletedAt: { type: Date, default: null },

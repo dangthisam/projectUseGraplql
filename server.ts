@@ -4,7 +4,7 @@ import connect from './config/connect-db.js';
 import dotenv from 'dotenv';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@as-integrations/express5';
-import typeDefs from './type.js';
+import typeDefs from './typeDefs.js';
 import resolvers from './resolve.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
