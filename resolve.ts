@@ -2,6 +2,7 @@
    import { get } from "mongoose";
 import Article from "./models/articles.model";
    import Category from "./models/category.model";  
+import { create } from "domain";
    const resolvers = {
         Query: {
             articles: async () => {
@@ -98,6 +99,19 @@ import Article from "./models/articles.model";
                 } catch (error) {
                     console.error('Error updating article:', error);
                     throw new Error('Failed to update article');
+                }
+            },
+
+            createCategory: async (__, args) => {
+                try {
+                    const { category } = args;
+                    const newCategory = new Category(
+                        category
+                    );
+                    return await newCategory.save();
+                } catch (error) {
+                    console.error('Error creating category:', error);
+                    throw new Error('Failed to create category');
                 }
             }
         }
