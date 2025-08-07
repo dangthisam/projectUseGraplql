@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import { ApolloServer } from '@apollo/server';
 import { expressMiddleware } from '@as-integrations/express5';
 import typeDefs from './typeDefs/index.typeDefs.js';
-import resolvers from './resolve.js';
+import resolvers from './resolve/index.resolve.js';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 
