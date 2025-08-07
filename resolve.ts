@@ -1,8 +1,8 @@
    
-   import { get } from "mongoose";
+
 import Article from "./models/articles.model";
    import Category from "./models/category.model";  
-import { create } from "domain";
+
    const resolvers = {
         Query: {
             articles: async () => {
@@ -57,7 +57,7 @@ import { create } from "domain";
             category: async (article) => {
                 try {
                     // Lấy danh mục của bài viết
-                    return await Category.findById(article.category);
+                    return await Category.findById(article.categoryId);
                 } catch (error) {
                     console.error('Error fetching article category:', error);
                     throw new Error('Failed to fetch article category');
@@ -69,7 +69,7 @@ import { create } from "domain";
                 try {
                     const { article } = args;
                     const newArticle = new Article(
-                        ...article
+                        article
                     );
                     return await newArticle.save();
                 } catch (error) {
