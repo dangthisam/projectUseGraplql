@@ -1,5 +1,6 @@
    
-   import Article from "./models/articles.model";
+   import { get } from "mongoose";
+import Article from "./models/articles.model";
    import Category from "./models/category.model";  
    const resolvers = {
         Query: {
@@ -35,6 +36,19 @@
                 } catch (error) {
                     console.error('Error fetching categories:', error);
                     throw new Error('Failed to fetch categories');
+                }
+            },
+
+            getCategory: async (__, args) => {
+                const { id } = args;
+                try {
+                    return await Category.findById({
+                        _id: id,
+                        deleted: false
+                    });
+                } catch (error) {
+                    console.error('Error fetching category:', error);
+                    throw new Error('Failed to fetch category');
                 }
             }
         },
