@@ -34,6 +34,35 @@ const userResolvers = {
         fullName: newUser.fullName,
     };
     },
+
+    loginUser: async (__, args) => {
+      const { user } = args;
+      console.log("User login data:", user);
+      const existingUser = await User.findOne({ email: user.email, deleted: false });
+      if (!existingUser) {
+        return {
+          code: 404,
+          success: false,
+          message: "User not found",
+        };
+      }
+      if (existingUser.password !== md5(user.password)) {
+        return {
+          code: 401,
+          success: false,
+          message: "Invalid password",
+        };
+      }
+      return {
+        code: 200,
+        success: true,
+        message: "User logged in successfully",
+        email: existingUser.email,
+        token: existingUser.token,
+        id: existingUser._id,
+        fullName: existingUser.fullName,
+      };
+    },
   },
 };
 
