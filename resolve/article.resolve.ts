@@ -6,7 +6,7 @@ const resolversArticle = {
     articles: async (__, args) => {
       try {
         //sort
-        const { sortKey, sortValue , currentPage, limit, filterKey, filterValue } = args;
+        const { sortKey, sortValue , currentPage, limit, filterKey, filterValue , keyWord } = args;
         const sort = {};
         if (sortKey && sortValue) {
           sort[sortKey] = sortValue;
@@ -20,6 +20,13 @@ const find={
 if(filterKey && filterValue) {
     find[filterKey] = filterValue;
 }
+
+        // Tìm kiếm theo từ khóa
+        if (keyWord) {
+       
+          const regex = new RegExp(keyWord, "i");
+          find["title"] = regex;
+        }
 
         // Lấy danh sách bài viết từ cơ sở dữ liệu
         return await Article.find(find).sort(sort).limit(limit).skip(skip);
