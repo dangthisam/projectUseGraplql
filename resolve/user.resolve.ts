@@ -4,9 +4,17 @@ import { generateRandomString } from ".././helper/generate";
 import md5 from "md5";
 const userResolvers = {
   Query: {
-    getUser: async (__, args) => {
-      const { id } = args;
-      const user = await User.findOne({ _id: id, deleted: false });
+    getUser: async (__, args , context) => {
+      // Lấy thông tin người dùng từ context
+      const users= context.req.user; 
+   if(users.token === undefined || users.token === null) {
+        return {
+          code: 401,
+          message: "Unauthorized",
+          success: false,
+        };
+      }
+      const user = await User.findOne({ token: users.token, deleted: false });
     if(user) {
         return {
           id: user._id,
@@ -21,12 +29,12 @@ const userResolvers = {
           code: 404,
           message: "User not found",
           success: false,
-        };
+        };  
       }
     },
   },
 
-  
+
   Mutation: {
     registerUser: async (__, args) => {
       const { user } = args;
